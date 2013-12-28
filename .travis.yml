@@ -21,3 +21,12 @@ script:
 after_success:
   # Report
     - coveralls
+
+deploy:
+  provider: pypi
+  user: qdamian
+  password:
+    secure: Sva5QdVZQPEBEH6KMEz4n/zThCUwk4dBkzT9Vq6oh9y+FeuS/TH9dJ+ekD2Ucj/Rlx4LwOHKoW9GRswq2OAy5vha0U6KfRvLNMQZNaUWhOO/Uixzy/x7R+YWuiWxLc4LWVlVtpnTZS/5i2hLIyPxVUTat2irc/cBiKiBFDPfH2Q=
+  server: https://testpypi.python.org/pypi
+  on:
+    tags: true
