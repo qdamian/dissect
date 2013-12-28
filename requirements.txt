@@ -1,0 +1,10 @@
+formic
+bottle
+behave
+behaving
+coverage
+mock
+pylint
+python-coveralls
+nose
+nose-parameterized

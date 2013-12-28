@@ -1,0 +1,12 @@
+[run]
+branch = True
+include = dissect/*
+omit = dissect/collection/dynamic/*
+omit = dissect/consolidation/util/handlers.py
+
+[report]
+omit = dissect/collection/dynamic/*
+omit = dissect/consolidation/util/handlers.py
+
+[paths]
+source = dissect/*
