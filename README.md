@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/qdamian/dissect.png?branch=master)](https://travis-ci.org/qdamian/dissect)
+[![Coverage Status](https://coveralls.io/repos/qdamian/dissect/badge.png?branch=master)](https://coveralls.io/r/qdamian/dissect?branch=master)
+
 dissect
 =======
 
