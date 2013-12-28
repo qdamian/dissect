@@ -1,4 +1,4 @@
-formic
+formic >=0.0.dev0
 bottle
 behave
 behaving
