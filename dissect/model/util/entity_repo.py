@@ -18,8 +18,6 @@
 #endregion
 
 
-import logging
-
 class EntityRepo(object):
     def __init__(self):
         self.elements_by_id = {}
@@ -27,9 +25,6 @@ class EntityRepo(object):
 
     def add(self, element):
         assert element.id_
-
-        logging.getLogger(__name__).debug('Adding %s' % element.id_)
-        print 'Adding %s' % element.id_
 
         self.elements_by_id[element.id_] = element
         try:
