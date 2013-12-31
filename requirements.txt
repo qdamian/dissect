@@ -1,10 +1,12 @@
-formic >=0.0.dev0
-bottle
 behave
 behaving
+bottle
 coverage
+formic >=0.0.dev0
 mock
-pylint
-python-coveralls
 nose
 nose-parameterized
+pylint
+python-coveralls
+sphinx
+Sphinx-PyPI-upload
