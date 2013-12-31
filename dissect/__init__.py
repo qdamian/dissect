@@ -56,8 +56,14 @@ class Trace(object):
         self.data_sink.stop()
 
 def run(filepath, callback):
-    sys.path = [os.path.dirname(filepath)] + sys.path
-    trace = Trace(filepath, callback)
+    dir_path = os.path.dirname(filepath)
+    sys.path = [dir_path] + sys.path
+    trace = Trace(dir_path, callback)
     trace.start()
-    execfile(filepath)
+    globals_namespace = {'__file__': filepath,
+                         '__name__': '__main__',
+                         '__package__': None,
+                         '__cached__': None
+                        }
+    execfile(filepath, globals_namespace)
     trace.stop()
