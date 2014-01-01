@@ -23,6 +23,7 @@ from nose.tools import assert_false
 
 @given(u'my program has modules aa, ab, ba, bb')
 @given(u'my program has modules aa_func, ab_func, ba_func, bb_func')
+@given(u'my program calls functions aa_func, ab_func, ba_func, bb_func')
 def step_impl(context):
     assert_false(hasattr(context, 'program_path'))
     context.program_path = os.path.abspath(
