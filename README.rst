@@ -16,6 +16,15 @@ It uses the standard library `tracer`_ to represent the program execution in a t
 
 And it relates the two trees (function call -> function).
 
+Contact
+-------
+
+Feel free to email me at qdamian@gmail.com
+
+---
+
+Copyright 2014, Damian Quiroga
+
 .. _depict: https://github.com/qdamian/depict
 .. _astroid: https://bitbucket.org/logilab/astroid
 .. _tracer: http://docs.python.org/2/library/sys.html#sys.settrace
