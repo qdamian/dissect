@@ -1,12 +1,9 @@
-behave
-behaving
-bottle
-coverage
 formic >=0.0.dev0
+pylint
+behaving
+coverage
 mock
 nose
 nose-parameterized
-pylint
 python-coveralls
 sphinx
-Sphinx-PyPI-upload
