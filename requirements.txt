@@ -1,6 +1,6 @@
 formic >=0.0.dev0
 pylint
-behaving
+behave
 coverage
 mock
 nose

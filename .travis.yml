@@ -3,7 +3,9 @@ python:
   - 2.7
 install:
   # Dependencies
-    - pip install -r requirements.txt --use-mirrors
+    - test -d pip.cache || git clone --depth 1 git://github.com/qdamian/dissect.pip.cache pip.cache
+    - pip install --no-index --find-links=pip.cache -r requirements.txt --quiet
+    - pip install -r requirements.txt --use-mirrors --quiet
   # Workaround https://github.com/travis-ci/travis-cookbooks/issues/155
     - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 script:
