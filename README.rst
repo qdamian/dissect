@@ -1,3 +1,6 @@
+.. image:: https://badge.waffle.io/qdamian/dissect.png?label=ready
+  :target: http://waffle.io/qdamian/dissect
+
 .. image:: https://travis-ci.org/qdamian/dissect.png?branch=master
   :target: https://travis-ci.org/qdamian/dissect
 
