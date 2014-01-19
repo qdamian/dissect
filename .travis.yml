@@ -10,7 +10,7 @@ install:
     - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 script:
   # Lint
-    - pylint --rcfile=.pylintrc dissect
+    - pylint --errors-only --rcfile=.pylintrc dissect
   # Unit test
     - nosetests --config .noserc
   # Build

@@ -22,9 +22,9 @@ from dissect.collection.dynamic.filter.calls_per_time_period import \
 
 from dissect.collection.dynamic.filter.project_modules import \
                                                          ProjectModules
-from dissect.collection.dynamic.thread_scoped_tracer import ThreadScopedTracer
-from dissect.modeling.dynamic.function_call import FunctionCall \
-                                                          as FunctionCallModeler
+from dissect.collection.dynamic.process_scoped_tracer \
+                                                    import ProcessScopedTracer
+from dissect.modeling.dynamic.process import Process as ProcessModeler
 from dissect.modeling.static.function import Function as FunctionModeler
 from dissect.modeling.static.module import Module as ModuleModeler
 from dissect.modeling.static.class_ import Class_ as ClassModeler
@@ -36,8 +36,8 @@ class Driver(object):
         self.observer = observer
         self.orchestrator = orchestrator
 
-        self.function_call_modeler = FunctionCallModeler(entity_id_generator,
-                                                         orchestrator.model)
+        self.process_modeler = \
+            ProcessModeler(entity_id_generator, orchestrator.model)
 
         self._setup_static_data_modeling()
 
@@ -46,11 +46,11 @@ class Driver(object):
         project_modules_filter = ProjectModules(entity_id_generator.base_path,
                                                 one_call_per_second_filter)
 
-        self.thread_scoped_tracer = ThreadScopedTracer(project_modules_filter)
-        self.stop = self.thread_scoped_tracer.stop
+        self.process_scoped_tracer = ProcessScopedTracer(project_modules_filter)
+        self.stop = self.process_scoped_tracer.stop
 
     def start(self):
-        self.thread_scoped_tracer.start()
+        self.process_scoped_tracer.start()
 
     def on_call(self, frame_digest):
         # I wonder what this is...
@@ -58,7 +58,7 @@ class Driver(object):
             return
 
         self._model_static_entities_from(frame_digest.file_name)
-        function_call = self.function_call_modeler.on_call(frame_digest)
+        function_call = self.process_modeler.on_call(frame_digest)
         self.observer.on_call(function_call)
         return True
 

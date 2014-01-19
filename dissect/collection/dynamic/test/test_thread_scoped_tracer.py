@@ -105,7 +105,7 @@ class TestThreadScopedTracer():
         actual_function_name = thread_digest.function_name
         assert_equal(actual_function_name, 'function1')
 
-    def test_ignores_attribute_error_on_notification(self):
+    def test_it_ignores_attribute_error_on_notification(self):
         # Arrange
         call_handler = Mock()
         call_handler.on_call.side_effect = AttributeError

@@ -17,25 +17,27 @@
 # along with dissect.  If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-from dissect.modeling.static.class_ import Class_
-from dissect.modeling.orchestrator import Orchestrator
-from dissect.modeling.static.function import Function
-from dissect.modeling.static.module import Module
-from dissect.model.model import Model
+import sys
+import threading
+from dissect.collection.dynamic.thread_scoped_tracer import ThreadScopedTracer
 
-class Driver(object):
-    def __init__(self, file_set):
-        self.file_set = file_set
-        self.model = Model()
 
-    def run(self):
-        orchestrator = Orchestrator(self.file_set.directory, self.model)
-        orchestrator.include(Module)
-        orchestrator.include(Class_)
-        orchestrator.include(Function)
+class ProcessScopedTracer(object):
+    def __init__(self, call_handler):
+        self.call_handler = call_handler
+        self.stop = self.__stop_trace__
 
-        file_list = [f for f in self.file_set]
+    def start(self):
+        threading.settrace(self._set_trace)
+        self._install_tracer()
 
-        orchestrator.process(file_list)
+    def __stop_trace__(self):
+        sys.settrace(None)
+        threading.settrace(None)
 
-        return self.model
+    # pylint: disable=unused-argument
+    def _set_trace(self, frame, event, _):
+        self._install_tracer()
+
+    def _install_tracer(self):
+        ThreadScopedTracer(self.call_handler).start()

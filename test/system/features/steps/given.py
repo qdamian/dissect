@@ -21,9 +21,10 @@ import os
 from nose.tools import assert_false
 
 
-@given(u'my program has modules aa, ab, ba, bb')
-@given(u'my program has modules aa_func, ab_func, ba_func, bb_func')
-@given(u'my program calls functions aa_func, ab_func, ba_func, bb_func')
+@given(u'my program has modules main, aa, ab, ba, bb')
+@given(u'my program has functions main, aa_func, ab_func, ba_func, bb_func')
+@given(u'my program calls functions main, aa_func, ab_func, ba_func, bb_func')
+@given(u'my program runs in the MainThread and more other threads')
 def step_impl(context):
     assert_false(hasattr(context, 'program_path'))
     context.program_path = os.path.abspath(

@@ -22,16 +22,15 @@ import uuid
 
 from dissect.model.entity.function_call import FunctionCall \
                                             as FunctionCallEntity
-from dissect.model.entity.thread import Thread
+from dissect.model.entity.thread import Thread as ThreadEntity
 
 
-class FunctionCall(object):
+class Thread(object):
 
     def __init__(self, entity_id_generator, model):
         self.entity_id_generator = entity_id_generator
         self.model = model
-
-        current_thread = Thread(threading.current_thread().name)
+        current_thread = ThreadEntity(threading.current_thread().name)
         self.model.threads.add(current_thread)
         self.current_function = current_thread
 

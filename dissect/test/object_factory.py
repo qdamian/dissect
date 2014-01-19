@@ -41,6 +41,7 @@ from dissect.model.entity.function_call import FunctionCall
 from dissect.collection.static.source_code_parser import SourceCodeParser
 from dissect.consolidation.observable_model import ObservableModel
 from dissect.collection.dynamic.frame_digest import FrameDigest
+from dissect.collection.dynamic.process_scoped_tracer import ProcessScopedTracer
 from dissect.collection.dynamic.thread_scoped_tracer import ThreadScopedTracer
 from dissect.model.entity.class_ import Class_
 from dissect.model.entity.function import Function
@@ -55,7 +56,8 @@ from dissect.modeling.static.driver import Driver as StaticModelingDriver
 from dissect.modeling.dynamic.driver import Driver as DynamicModelingDriver
 from dissect.modeling.static.class_ import Class_ as ClassModeler
 from dissect.modeling.static.function import Function as FunctionModeler
-from dissect.modeling.dynamic.function_call import FunctionCall as FunctionCallModeler
+from dissect.modeling.dynamic.thread import Thread as ThreadModeler
+from dissect.modeling.dynamic.process import Process as ProcessModeler
 
 
 def fake(class_name, spec_set=True):
@@ -77,6 +79,7 @@ __NodeNG = NodeNG()
 __Orchestrator = Orchestrator(__base_path, __Model)
 __Thread = Thread('thread_id')
 __EntityRepo = EntityRepo()
+__ProcessScopedTracer = ProcessScopedTracer(MagicMock())
 __ThreadScopedTracer = ThreadScopedTracer(MagicMock())
 __FrameDigest = FrameDigest(inspect.currentframe())
 __Class_ = Class_('class_id', 'class_name', __Module)
@@ -88,7 +91,8 @@ __FunctionModeler = FunctionModeler(__SourceCodeParser, __EntityIdGenerator, __M
 __StaticModelingDriver = StaticModelingDriver(__FileSet)
 __DynamicModelingDriver = DynamicModelingDriver(MagicMock(), __EntityIdGenerator, __Orchestrator)
 __FunctionCall = FunctionCall('function_call_id', __Function, __Thread)
-__FunctionCallModeler = FunctionCallModeler(__EntityIdGenerator, __Model)
+__ThreadModeler = ThreadModeler(__EntityIdGenerator, __Model)
+__ProcessModeler = ProcessModeler(__EntityIdGenerator, __Model)
 __Queue = Queue.Queue()
 __DataSource = DataSource(__Queue)
 __ObservableModel = ObservableModel(__DataSource)

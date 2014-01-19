@@ -27,13 +27,13 @@ from dissect.test.object_factory import fake, real
 
 class TestDriver():
     def setUp(self):
-        self.thread_scoped_tracer_patcher = patch('dissect.modeling.dynamic.driver.ThreadScopedTracer', autospec=True)
-        self.thread_scoped_tracer = fake('ThreadScopedTracer')
+        self.thread_scoped_tracer_patcher = patch('dissect.modeling.dynamic.driver.ProcessScopedTracer', autospec=True)
+        self.thread_scoped_tracer = fake('ProcessScopedTracer')
         self.thread_scoped_tracer_class = self.thread_scoped_tracer_patcher.start()
         self.thread_scoped_tracer_class.return_value = self.thread_scoped_tracer
 
-        self.function_call_patcher = patch('dissect.modeling.dynamic.driver.FunctionCallModeler', autospec=True)
-        self.function_call_modeler = fake('FunctionCallModeler')
+        self.function_call_patcher = patch('dissect.modeling.dynamic.driver.ProcessModeler', autospec=True)
+        self.function_call_modeler = fake('ProcessModeler')
         self.function_call_class = self.function_call_patcher.start()
         self.function_call_class.return_value = self.function_call_modeler
 
