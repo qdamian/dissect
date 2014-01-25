@@ -36,9 +36,7 @@ class ObjectEncoder(JSONEncoder):
         encoder.key = self.key
         return loads(dumps(values, cls=ReferenceEncoder))
 
-class EntityToJson(object):
-    @staticmethod
-    def convert(obj, key):
-        encoder = ObjectEncoder
-        encoder.key = key
-        return dumps(obj, cls=encoder, indent=4, separators=(',', ':'))
+def convert(obj, key):
+    encoder = ObjectEncoder
+    encoder.key = key
+    return dumps(obj, cls=encoder, indent=4, separators=(',', ':'))

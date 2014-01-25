@@ -28,7 +28,7 @@ from dissect.test.object_factory import real
 
 
 class TestDataSource():
-    @patch('dissect.consolidation.data_source.EntityToJson')
+    @patch('dissect.consolidation.data_source.entity_to_json')
     def test_it_logs_each_entity_of_the_data_model(self, entity_to_json):
         # Arrange
         data_source = DataSource(Queue.Queue())

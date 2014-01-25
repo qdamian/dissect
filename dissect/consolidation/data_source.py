@@ -18,7 +18,7 @@
 #endregion
 
 import logging
-from dissect.consolidation.util.entity_to_json import EntityToJson
+from dissect.consolidation.util import entity_to_json
 from dissect.consolidation.util.handlers import QueueHandler
 
 
@@ -32,4 +32,4 @@ class DataSource(object):
         self.logger.addHandler(queue_handler)
 
     def on_entity(self, entity):
-        self.logger.warning(EntityToJson.convert(entity, 'id_'))
+        self.logger.warning(entity_to_json.convert(entity, 'id_'))

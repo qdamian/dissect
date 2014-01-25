@@ -25,7 +25,7 @@ from dissect.consolidation.util.json_to_entity import JsonToEntity
 from dissect.model.entity.function import Function
 from dissect.model.entity.module import Module
 from dissect.model.entity.thread import Thread
-from dissect.consolidation.util.entity_to_json import EntityToJson
+from dissect.consolidation.util import entity_to_json
 from dissect.test.object_factory import real, unique
 from dissect.consolidation.util.test.test_entity_to_json import SimpleObject
 
@@ -60,8 +60,8 @@ class TestJsonDeserializer():
         # Arrange
         expected_module = real('Module')
         expected_function = real('Function')
-        json_module = EntityToJson.convert(expected_module, 'id_')
-        json_function = EntityToJson.convert(expected_function, 'id_')
+        json_module = entity_to_json.convert(expected_module, 'id_')
+        json_function = entity_to_json.convert(expected_function, 'id_')
         json_to_entity = JsonToEntity()
 
         # Act
@@ -78,8 +78,8 @@ class TestJsonDeserializer():
         # Arrange
         expected_module = real('Module')
         expected_function = real('Function')
-        json_module = EntityToJson.convert(expected_module, 'id_')
-        json_function = EntityToJson.convert(expected_function, 'id_')
+        json_module = entity_to_json.convert(expected_module, 'id_')
+        json_function = entity_to_json.convert(expected_function, 'id_')
         json_to_entity = JsonToEntity()
 
         # Act
@@ -97,8 +97,8 @@ class TestJsonDeserializer():
             module2 = unique(real('Module'))
             function = real('Function')
             function.parent = module1
-            json_module2 = EntityToJson.convert(module2, 'id_')
-            json_function = EntityToJson.convert(function, 'id_')
+            json_module2 = entity_to_json.convert(module2, 'id_')
+            json_function = entity_to_json.convert(function, 'id_')
             json_to_entity = JsonToEntity()
             json_to_entity.logger = Mock()
 
