@@ -1,0 +1,8 @@
+pylint
+behave
+coverage
+mock
+nose
+nose-parameterized
+python-coveralls
+sphinx
