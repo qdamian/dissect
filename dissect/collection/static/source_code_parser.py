@@ -18,6 +18,7 @@
 #endregion
 
 import sys
+import os
 
 from astroid.exceptions import AstroidBuildingException
 from astroid.manager import AstroidManager
@@ -50,6 +51,8 @@ class SourceCodeParser(object):
         if not isinstance(paths, list):
             paths = [paths]
 
+        paths = [path for path in paths if os.path.isfile(path)]
+
         len_before = len(self.file_paths)
         self.file_paths.update(paths)
         return len(self.file_paths) != len_before
@@ -60,7 +63,7 @@ class SourceCodeParser(object):
     def parse(self):
         manager = AstroidManager()
         project = manager.project_from_files(list(self.file_paths),
-                                func_wrapper=astroid_ignore_modname_wrapper)
+                            func_wrapper=astroid_ignore_modname_wrapper)
 
         # First collect all definitions (e.g. module X, function foo) before
         # trying to relate one definition with another (e.g. module X depends on

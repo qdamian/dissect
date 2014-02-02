@@ -27,16 +27,15 @@ template objects) or mock objects (generated using Mock's autospeccing).
 http://www.voidspace.org.uk/python/mock/helpers.html#autospeccing
 '''
 
-import Queue
 from copy import deepcopy
 import inspect
 import uuid
 
 from astroid.bases import NodeNG
 from formic.formic import FileSet
-from mock import create_autospec, MagicMock
+from mock import create_autospec, Mock, MagicMock
 
-from dissect.consolidation.data_source import DataSource
+from dissect.consolidation.async_publisher import AsyncPublisher
 from dissect.model.entity.function_call import FunctionCall
 from dissect.collection.static.source_code_parser import SourceCodeParser
 from dissect.consolidation.observable_model import ObservableModel
@@ -93,6 +92,5 @@ __DynamicModelingDriver = DynamicModelingDriver(MagicMock(), __EntityIdGenerator
 __FunctionCall = FunctionCall('function_call_id', __Function, __Thread)
 __ThreadModeler = ThreadModeler(__EntityIdGenerator, __Model)
 __ProcessModeler = ProcessModeler(__EntityIdGenerator, __Model)
-__Queue = Queue.Queue()
-__DataSource = DataSource(__Queue)
-__ObservableModel = ObservableModel(__DataSource)
+__AsyncPublisher = AsyncPublisher(Mock())
+__ObservableModel = ObservableModel(__AsyncPublisher)

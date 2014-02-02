@@ -17,53 +17,53 @@
 # along with dissect.  If not, see <http://www.gnu.org/licenses/>.
 #endregion
 
-from dissect.consolidation.data_sink import EntityDataSink
+from dissect.consolidation.async_publisher import AsyncPublisher
 from dissect.model.util.entity_id_generator import EntityIdGenerator
 from dissect.modeling.dynamic.driver import Driver \
                                            as DynamicModelingDriver
-from dissect.consolidation.data_source import DataSource
 from dissect.consolidation.observable_model import ObservableModel
 from dissect.modeling.orchestrator import Orchestrator
 from dissect.model.entity.module import Module
+from contextlib import contextmanager
 import logging
-import Queue
 import sys
 import os
 
 class Trace(object):
     def __init__(self, base_path, callback):
-        queue = Queue.Queue()
-        data_source = DataSource(queue)
-        self.model = ObservableModel(data_source)
-        self.data_sink = EntityDataSink(queue, self)
+        self.async_publisher = AsyncPublisher(callback)
+        self.model = ObservableModel(self.async_publisher)
 
         entity_id_generator = EntityIdGenerator(base_path)
         modeling_orchestrator = Orchestrator(base_path, self.model)
         self.dynamic_modeling_driver = DynamicModelingDriver(self,
                                                      entity_id_generator,
                                                      modeling_orchestrator)
-        self.callback = callback
-
-    def handle(self, entity):
-        self.callback(entity)
 
     def start(self):
-        self.data_sink.start()
+        self.async_publisher.start()
         self.dynamic_modeling_driver.start()
 
     def stop(self):
         self.dynamic_modeling_driver.stop()
-        self.data_sink.stop()
+        self.async_publisher.stop()
 
 def run(filepath, callback):
-    dir_path = os.path.dirname(filepath)
-    sys.path = [dir_path] + sys.path
-    trace = Trace(dir_path, callback)
-    trace.start()
+    root_path = os.path.dirname(filepath)
+    sys.path = [root_path] + sys.path
     globals_namespace = {'__file__': filepath,
                          '__name__': '__main__',
                          '__package__': None,
                          '__cached__': None
                         }
-    execfile(filepath, globals_namespace)
-    trace.stop()
+    with trace(root_path, callback):
+        execfile(filepath, globals_namespace)
+
+@contextmanager
+def trace(root_path, callback):
+    trace = Trace(root_path, callback)
+    try:
+        trace.start()
+        yield
+    finally:
+        trace.stop()

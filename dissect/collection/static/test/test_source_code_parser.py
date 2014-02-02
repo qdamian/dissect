@@ -21,6 +21,7 @@ from mock import patch, Mock, ANY
 from nose.tools import *
 from dissect.collection.static.source_code_parser import SourceCodeParser
 
+
 class TestSourceCodeParser():
 
     def setUp(self):
@@ -28,9 +29,11 @@ class TestSourceCodeParser():
         self.ast_ng_manager_mock = Mock()
         self.ast_ng_manager_class_mock = self.ast_ng_manager_patcher.start()
         self.ast_ng_manager_class_mock.return_value = self.ast_ng_manager_mock
+        self.os_patcher = patch('dissect.collection.static.source_code_parser.os')
+        self.os_patcher.start()
 
     def tearDown(self):
-        self.ast_ng_manager_patcher.stop()
+        patch.stopall()
 
     @patch('dissect.collection.static.source_code_parser.sys')
     def test_adds_base_path_to_top_of_python_path(self, sys_mock):
@@ -107,3 +110,17 @@ class TestSourceCodeParser():
 
         # Assert
         assert_false(result)
+
+    def test_if_only_add_files_that_exist(self):
+        with patch('dissect.collection.static.source_code_parser.os.path.isfile',
+                   new=Mock(side_effect=lambda f: f == 'file-which-exists')):
+            # Given
+            parser = SourceCodeParser('.')
+
+            # When
+            parser.add_files(['file-which-exists', 'file-which-does-not-exist'])
+            parser.parse()
+
+            # Then
+            self.ast_ng_manager_mock.project_from_files.assert_called_once_with(
+                ['file-which-exists'], func_wrapper=ANY)
