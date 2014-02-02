@@ -13,7 +13,7 @@ dissect
 
 This library is meant to be used by `depict`_.
 
-It uses `astroid`_ to represent the source code of the program in a tree structure (package -> module -> class -> function -> block -> line).
+It uses `astroid`_ to parse the source code of the program in a tree structure (package -> module -> class -> function -> block -> line).
 
 It uses the standard library `tracer`_ to represent the program execution in a tree structure (thread -> function call -> function call).
 
