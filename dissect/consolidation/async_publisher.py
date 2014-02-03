@@ -20,8 +20,6 @@
 import threading
 from Queue import Queue
 
-from dissect.consolidation.util.json_to_entity import JsonToEntity
-
 
 class AsyncPublisher(object):
 
@@ -29,7 +27,6 @@ class AsyncPublisher(object):
         self.queue = Queue()
         self.callback = callback
         self._stop_sentinel = None
-        self.json_to_entity = JsonToEntity()
 
     def start(self):
         self.thread = threading.Thread(target=self._process_queue)
