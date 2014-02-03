@@ -1,13 +1,10 @@
-deploy: 
-  password: 
-    secure: Tvba7OA7pgsnf0PYggfwy/A1wq4QUr3B48nhKvKA9CisSoLrnxoWKQoKIUptwNiLRmKjRzBXlwYw6UC27Mxj8srFfu46WuSLPt9doP3K75NLCIQdnmtWp3s4XQnCM7IjBIB4jqicQzg4EQqQyaNVusc40ro6NoQ2swRV/apmnIE=
-  server: https://testpypi.python.org/pypi
-  on: 
-    tags: true
-  user: qdamian
-  provider: pypi
-python: 
-- 2.7
+after_success: 
+- coveralls
+install: 
+- test -d pip.cache || git clone --depth 1 git://github.com/qdamian/dissect.pip.cache pip.cache
+- pip install --no-index --find-links=pip.cache -r requirements.txt -r dev-requirements.txt --quiet
+- pip install -r requirements.txt --use-mirrors --quiet
+- sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 script: 
 - pylint --errors-only --rcfile=.pylintrc dissect
 - nosetests --config .noserc
@@ -15,11 +12,14 @@ script:
 - python setup.py sdist
 - python setup.py install
 - behave test/system/features
-install: 
-- test -d pip.cache || git clone --depth 1 git://github.com/qdamian/dissect.pip.cache pip.cache
-- pip install --no-index --find-links=pip.cache -r requirements.txt -r dev-requirements.txt --quiet
-- pip install -r requirements.txt --use-mirrors --quiet
-- sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
+python: 
+- 2.7
 language: python
-after_success: 
-- coveralls
+deploy: 
+  password: 
+    secure: pIvc0o8M0bg/CPCb3yXb6+rZWZPCcgq6X8AslKIHmx8rvaEIQZC/fhKxGIrROIFOHLSEWrPzeblJWweSwDVSwOtFj30uLpFLrC0V2kR4uoNoiOjXmAHweYD1j9gvQvB/xkDNFgHkpG5wX8jxwMiGb6dFn83AfXsBYY75bYklSW4=
+  on: 
+    tags: true
+  server: https://testpypi.python.org/pypi
+  provider: pypi
+  user: qdamian
