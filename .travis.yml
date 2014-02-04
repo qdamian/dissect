@@ -15,6 +15,9 @@ install:
 - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
 after_success: 
 - coveralls
+before_deploy:
+- echo "before deploy"
+- date
 deploy: 
   on: 
     tags: true
@@ -23,3 +26,6 @@ deploy:
   server: https://testpypi.python.org/pypi
   user: qdamian
   provider: pypi
+after_deploy:
+- echo "after deploy"
+- date
